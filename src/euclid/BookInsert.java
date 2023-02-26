@@ -35,6 +35,7 @@ public class BookInsert{
     BorderPane border;
     VBox vBoxLayout;
     HBox hBoxLayout;
+    HBox categories;
 
     public void openWindow(BorderPane border) {
         this.border = border;
@@ -47,6 +48,7 @@ public class BookInsert{
         back.setOnAction(e -> new MainMenu().openWindow(border));
         border.setCenter(vBoxLayout);
         border.setTop(hBoxLayout);
+//        border.setBottom(categories);
     }
     
     
@@ -93,7 +95,22 @@ public class BookInsert{
         CheckBox c1 = new CheckBox("Δοκίμιο");
         CheckBox c2 = new CheckBox("Μυθιστόρημα");
         CheckBox c3 = new CheckBox("Επιστήμη");
-        
+        VBox firstCol = new VBox(c1, c2, c3);
+        firstCol.setSpacing(20);
+        CheckBox c4 = new CheckBox("Τέχνη");
+        CheckBox c5 = new CheckBox("Εσωτερισμός");
+        CheckBox c6 = new CheckBox("Θρησκεία");
+        VBox secondCol = new VBox(c4, c5, c6);
+        secondCol.setSpacing(20);
+        CheckBox c7 = new CheckBox("Ψυχολογία");
+        CheckBox c8 = new CheckBox("Αθλητισμός");
+        CheckBox c9 = new CheckBox("Πολιτική");
+        VBox thirdCol = new VBox(c7, c8, c9);
+        thirdCol.setSpacing(20);
+        categories = new HBox(firstCol, secondCol, thirdCol);
+        categories.setSpacing(30);
+        categories.setAlignment(Pos.CENTER);
+        categories.setPadding(new Insets(30, 0, 0, 0));
         
         // Back to Main Menu Button 
         back = new Button("Πίσω");
@@ -102,7 +119,7 @@ public class BookInsert{
                                         textName, name,
                                         textAuthor, author,
                                         textHouse, house,
-                                        c1, c2, c3,
+                                        categories,
                                         back);
     }
 }

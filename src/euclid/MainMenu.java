@@ -126,9 +126,9 @@ public class MainMenu {
         //Create new scale transition
         ScaleTransition scaleTransition = new ScaleTransition(duration, btn);
         //Set how much X should enlarge
-        scaleTransition.setByX(0.05);
+        scaleTransition.setToX(1.1);
         //Set how much Y should
-        scaleTransition.setByY(0.05);
+        scaleTransition.setToY(1.1);
         scaleTransition.play();
     }
     private void decreaseButton(Button btn){
@@ -136,9 +136,9 @@ public class MainMenu {
         //Create new scale transition
         ScaleTransition scaleTransition = new ScaleTransition(duration, btn);
         //Set how much X should enlarge
-        scaleTransition.setByX(-0.05);
+        scaleTransition.setToX(1);
         //Set how much Y should
-        scaleTransition.setByY(-0.05);
+        scaleTransition.setToY(1);
         scaleTransition.play();
     }
 }
