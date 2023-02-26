@@ -3,6 +3,12 @@ package euclid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
@@ -11,10 +17,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -26,12 +34,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 public class MainMenu {
@@ -82,10 +92,16 @@ public class MainMenu {
         searchBookBtn = new Button("Αναζήτηση Βιβλίου");
         searchBookBtn.setMinSize(250, 150);
         searchBookBtn.setFont(Font.font("Copperplate",15));
-        
+
+        searchBookBtn.setOnMouseEntered(eh -> enlargeButton(searchBookBtn));
+        searchBookBtn.setOnMouseExited(eh -> decreaseButton(searchBookBtn));
+
         insertBookBtn = new Button("Εισαγωγή Βιβλίου");
         insertBookBtn.setMinSize(250, 150);
         insertBookBtn.setFont(Font.font("Copperplate",15));
+        
+        insertBookBtn.setOnMouseEntered(eh -> enlargeButton(insertBookBtn));
+        insertBookBtn.setOnMouseExited(eh -> decreaseButton(insertBookBtn));
         
         // Adding background image to the buttons
         try{
@@ -103,5 +119,26 @@ public class MainMenu {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+    
+    private void enlargeButton(Button btn){
+        Duration duration = Duration.millis(200);
+        //Create new scale transition
+        ScaleTransition scaleTransition = new ScaleTransition(duration, btn);
+        //Set how much X should enlarge
+        scaleTransition.setByX(0.05);
+        //Set how much Y should
+        scaleTransition.setByY(0.05);
+        scaleTransition.play();
+    }
+    private void decreaseButton(Button btn){
+        Duration duration = Duration.millis(200);
+        //Create new scale transition
+        ScaleTransition scaleTransition = new ScaleTransition(duration, btn);
+        //Set how much X should enlarge
+        scaleTransition.setByX(-0.05);
+        //Set how much Y should
+        scaleTransition.setByY(-0.05);
+        scaleTransition.play();
     }
 }
