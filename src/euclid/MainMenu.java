@@ -7,6 +7,7 @@ import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
@@ -21,6 +22,8 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -35,11 +38,13 @@ public class MainMenu {
     Button searchBookBtn, insertBookBtn;
     Stage window;
     Scene scene;
-    VBox layout;
+    VBox vBoxLayout;
+    HBox hBoxLayout;
+    BorderPane border;
     Text text;
     
-    public void openWindow(VBox layout){
-        this.layout = layout;
+    public void openWindow(BorderPane border){
+        this.border = border;
         try{
             initializeScreen(); 
         }catch(Exception e){
@@ -49,19 +54,31 @@ public class MainMenu {
                 System.out.println("Hey");
                 System.out.println("Man");
         });
-        insertBookBtn.setOnAction(e -> new BookInsert().openWindow(layout));
-
-        layout.getChildren().addAll(text, searchBookBtn, insertBookBtn);
+        insertBookBtn.setOnAction(e -> new BookInsert().openWindow(border));
+        
+        // Adding title and buttons to BorderPane
+        vBoxLayout.getChildren().addAll(searchBookBtn, insertBookBtn);
+        border.setCenter(vBoxLayout);
+        border.setTop(hBoxLayout);
     }
     
     private void initializeScreen() throws FileNotFoundException{
-        layout.getChildren().clear();
+        border.getChildren().clear();
+        
+        // Creating the middle box 
+        vBoxLayout = new VBox();
+        vBoxLayout.setAlignment(Pos.CENTER);
+        vBoxLayout.setPadding(new Insets(0, 0, 55, 0));
+        
+        // Creating top box with title
+        hBoxLayout = new HBox();
+        hBoxLayout.setAlignment(Pos.CENTER);
+        hBoxLayout.setPadding(new Insets(55, 0, 0, 0));
         text = new Text("Κύριο Μενού");
         text.setFont(Font.font("Copperplate",FontWeight.BOLD,80));
+        hBoxLayout.getChildren().addAll(text);
         
-        
-        
-        
+        // Initializing Buttons
         searchBookBtn = new Button("Αναζήτηση Βιβλίου");
         searchBookBtn.setMinSize(250, 150);
         searchBookBtn.setFont(Font.font("Copperplate",15));
@@ -70,13 +87,10 @@ public class MainMenu {
         insertBookBtn.setMinSize(250, 150);
         insertBookBtn.setFont(Font.font("Copperplate",15));
         
+        // Adding background image to the buttons
         try{
             FileInputStream fs = new FileInputStream("/Users/conspd/Software/Euclid/src/euclid/button.png");
             Image img = new Image(fs);
-//            ImageView immg = new ImageView(img);
-//            immg.fitWidthProperty().bind(searchBookBtn.widthProperty());
-//            immg.fitHeightProperty().bind(searchBookBtn.heightProperty());
-//            searchBookBtn.setGraphic(immg);
             BackgroundImage myBi = new BackgroundImage(img ,
                                                        BackgroundRepeat.NO_REPEAT,
                                                        BackgroundRepeat.NO_REPEAT,

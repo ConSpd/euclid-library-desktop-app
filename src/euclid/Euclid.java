@@ -21,6 +21,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -31,7 +32,7 @@ import javafx.stage.Stage;
 
 public class Euclid extends Application{
     MainMenu mainMenu;
-    VBox layout;
+    BorderPane border;
     Stage window;
     Scene scene;
     
@@ -44,15 +45,14 @@ public class Euclid extends Application{
         window = primaryStage;
         createMainWindow();
         mainMenu = new MainMenu();
-        mainMenu.openWindow(layout);
+        mainMenu.openWindow(border);
     }
     
     
     // Create the main scene and layout, insert background image, insert title
     private void createMainWindow() throws Exception{
         Rectangle2D screenSize = Screen.getPrimary().getBounds();
-        layout = new VBox(30);
-        layout.setAlignment(Pos.CENTER);
+        border = new BorderPane();
         
         // Reading background paper image and adding to layout
         FileInputStream fs = new FileInputStream("/Users/conspd/Software/Euclid/src/euclid/paper.jpg");
@@ -64,10 +64,10 @@ public class Euclid extends Application{
                                                     new BackgroundSize(BackgroundSize.AUTO,
                                                                        BackgroundSize.AUTO,
                                                                        true, true, false, true));
-        layout.setBackground(new Background(myBi));
+        border.setBackground(new Background(myBi));
         
         
-        scene = new Scene(layout, screenSize.getWidth(), screenSize.getHeight());
+        scene = new Scene(border, screenSize.getWidth(), screenSize.getHeight());
         
         
         Image icon = new Image(new File("icon.png").toURI().toString());
