@@ -38,7 +38,7 @@ public class InsertPage{
         }catch(Exception e){
             e.printStackTrace();
         }
-        back.setOnAction(e -> new MainMenu().openWindow(border));
+        
         
     }
     
@@ -111,6 +111,7 @@ public class InsertPage{
         buttons.getChildren().addAll(back, insert);
         buttons.setAlignment(Pos.CENTER);
         buttons.setPadding(new Insets(0, 0, 190, 0));
+        back.setOnAction(e -> new MainMenu().openWindow(border));
         
         vBoxLayout.getChildren().addAll(textNumber, number,
                                         textName, name,

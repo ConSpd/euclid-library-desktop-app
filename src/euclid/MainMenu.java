@@ -45,13 +45,8 @@ import javafx.util.Duration;
 
 
 public class MainMenu {
-    Button searchBookBtn, insertBookBtn;
-    Stage window;
-    Scene scene;
-    VBox vBoxLayout;
-    HBox hBoxLayout;
     BorderPane border;
-    Text text;
+    File libraryFile;
     
     public void openWindow(BorderPane border){
         this.border = border;
@@ -60,45 +55,55 @@ public class MainMenu {
         }catch(Exception e){
             e.printStackTrace();
         }
-        searchBookBtn.setOnAction(e -> new SearchPage().openWindow(border));
-        insertBookBtn.setOnAction(e -> new InsertPage().openWindow(border));
-        
-        // Adding title and buttons to BorderPane
-        vBoxLayout.getChildren().addAll(searchBookBtn, insertBookBtn);
-        border.setCenter(vBoxLayout);
-        border.setTop(hBoxLayout);
     }
     
     private void initializeScreen() throws FileNotFoundException{
         border.getChildren().clear();
         
-        // Creating the middle box 
-        vBoxLayout = new VBox();
+        // Title section
+        HBox hBoxLayout = new HBox();
+        hBoxLayout.setAlignment(Pos.CENTER);
+        hBoxLayout.setPadding(new Insets(55, 0, 0, 0));
+        Text text = new Text("Κύριο Μενού");
+        text.setFont(Font.font("Copperplate",FontWeight.BOLD,80));
+        hBoxLayout.getChildren().addAll(text);
+
+        /*
+        *** Middle section
+        */
+        //Creating the middle box 
+        VBox vBoxLayout = new VBox();
         vBoxLayout.setAlignment(Pos.CENTER);
         vBoxLayout.setPadding(new Insets(0, 0, 55, 0));
         
-        // Creating top box with title
-        hBoxLayout = new HBox();
-        hBoxLayout.setAlignment(Pos.CENTER);
-        hBoxLayout.setPadding(new Insets(55, 0, 0, 0));
-        text = new Text("Κύριο Μενού");
-        text.setFont(Font.font("Copperplate",FontWeight.BOLD,80));
-        hBoxLayout.getChildren().addAll(text);
-        
         // Initializing Buttons
-        searchBookBtn = new Button("Αναζήτηση Βιβλίου");
+        Button searchBookBtn = new Button("Αναζήτηση Βιβλίου");
         searchBookBtn.setMinSize(250, 150);
         searchBookBtn.setFont(Font.font("Copperplate",15));
-
-        searchBookBtn.setOnMouseEntered(eh -> enlargeButton(searchBookBtn));
-        searchBookBtn.setOnMouseExited(eh -> decreaseButton(searchBookBtn));
-
-        insertBookBtn = new Button("Εισαγωγή Βιβλίου");
+        Button insertBookBtn = new Button("Εισαγωγή Βιβλίου");
         insertBookBtn.setMinSize(250, 150);
         insertBookBtn.setFont(Font.font("Copperplate",15));
+        Button optionsBtn = new Button("Ρυθμίσεις");
+        optionsBtn.setMinSize(250, 150);
+        optionsBtn.setFont(Font.font("Copperplate",15));
         
+        // Button animations
+        searchBookBtn.setOnMouseEntered(eh -> enlargeButton(searchBookBtn));
+        searchBookBtn.setOnMouseExited(eh -> decreaseButton(searchBookBtn));
         insertBookBtn.setOnMouseEntered(eh -> enlargeButton(insertBookBtn));
         insertBookBtn.setOnMouseExited(eh -> decreaseButton(insertBookBtn));
+        optionsBtn.setOnMouseEntered(eh -> enlargeButton(optionsBtn));
+        optionsBtn.setOnMouseExited(eh -> decreaseButton(optionsBtn));
+        
+        // Button functionalities
+        searchBookBtn.setOnAction(e -> new SearchPage().openWindow(border));
+        insertBookBtn.setOnAction(e -> new InsertPage().openWindow(border));
+        optionsBtn.setOnAction(e -> {
+            OptionsPage optionsPage = new OptionsPage();
+            optionsPage.openWindow();
+            libraryFile = optionsPage.getLibraryFile();
+            System.out.println(libraryFile);
+        });
         
         // Adding background image to the buttons
         try{
@@ -113,9 +118,19 @@ public class MainMenu {
                                                                           true, true, true, false));
             searchBookBtn.setBackground(new Background(myBi));
             insertBookBtn.setBackground(new Background(myBi));
+            optionsBtn.setBackground(new Background(myBi));
         }catch(Exception e){
             e.printStackTrace();
         }
+        /*
+        ***
+        */
+        
+        // Adding title and buttons to BorderPane
+        vBoxLayout.getChildren().addAll(searchBookBtn, insertBookBtn, optionsBtn);
+        
+        border.setCenter(vBoxLayout);
+        border.setTop(hBoxLayout);
     }
     
     private void enlargeButton(Button btn){
@@ -124,7 +139,7 @@ public class MainMenu {
         ScaleTransition scaleTransition = new ScaleTransition(duration, btn);
         //Set how much X should enlarge
         scaleTransition.setToX(1.1);
-        //Set how much Y should
+        //Set how much Y should enlarge
         scaleTransition.setToY(1.1);
         scaleTransition.play();
     }
@@ -134,7 +149,7 @@ public class MainMenu {
         ScaleTransition scaleTransition = new ScaleTransition(duration, btn);
         //Set how much X should enlarge
         scaleTransition.setToX(1);
-        //Set how much Y should
+        //Set how much Y should enlarge
         scaleTransition.setToY(1);
         scaleTransition.play();
     }
