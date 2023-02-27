@@ -11,12 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -28,14 +22,13 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class BookInsert{
+public class InsertPage{
     Stage window;
-    Button back;
+    Button back, insert;
     MainMenu mainMenu;
     BorderPane border;
     VBox vBoxLayout;
-    HBox hBoxLayout;
-    HBox categories;
+    HBox hBoxLayout, categories, buttons;
 
     public void openWindow(BorderPane border) {
         this.border = border;
@@ -46,9 +39,7 @@ public class BookInsert{
             e.printStackTrace();
         }
         back.setOnAction(e -> new MainMenu().openWindow(border));
-        border.setCenter(vBoxLayout);
-        border.setTop(hBoxLayout);
-//        border.setBottom(categories);
+        
     }
     
     
@@ -60,14 +51,14 @@ public class BookInsert{
         hBoxLayout.setAlignment(Pos.CENTER);
         hBoxLayout.setPadding(new Insets(55, 0, 0, 0));
         
-        
+        // Title section
         Text text = new Text();
         text.setFill(Color.BLACK);
-        text.setText("Εισαγωγή Βιβλίου");text.setX(50);text.setY(50);
+        text.setText("Εισαγωγή Βιβλίου");
         text.setFont(Font.font("Copperplate",FontWeight.BOLD,80));
         hBoxLayout.getChildren().addAll(text);
         
-        // Text
+        // Titles of input fields
         Text textNumber = new Text("Αριθμός (Αν μείνει κενό θα μπεί το επόμενο νούμερο)");
         Text textName = new Text("Τίτλος");
         Text textAuthor = new Text("Συγγραφέας");
@@ -91,7 +82,7 @@ public class BookInsert{
         house.setAlignment(Pos.CENTER);
 
         
-        // Category Checkboxes
+        // Category Checkboxes section
         CheckBox c1 = new CheckBox("Δοκίμιο");
         CheckBox c2 = new CheckBox("Μυθιστόρημα");
         CheckBox c3 = new CheckBox("Επιστήμη");
@@ -112,14 +103,23 @@ public class BookInsert{
         categories.setAlignment(Pos.CENTER);
         categories.setPadding(new Insets(30, 0, 0, 0));
         
-        // Back to Main Menu Button 
+        // Buttons section
         back = new Button("Πίσω");
+        insert = new Button("Προσθήκη");
+        
+        buttons = new HBox(20);
+        buttons.getChildren().addAll(back, insert);
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPadding(new Insets(0, 0, 190, 0));
         
         vBoxLayout.getChildren().addAll(textNumber, number,
                                         textName, name,
                                         textAuthor, author,
                                         textHouse, house,
-                                        categories,
-                                        back);
+                                        categories);
+        
+        border.setCenter(vBoxLayout);
+        border.setTop(hBoxLayout);
+        border.setBottom(buttons);
     }
 }

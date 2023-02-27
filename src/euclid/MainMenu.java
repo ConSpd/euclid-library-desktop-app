@@ -60,11 +60,8 @@ public class MainMenu {
         }catch(Exception e){
             e.printStackTrace();
         }
-        searchBookBtn.setOnAction(e -> {
-                System.out.println("Hey");
-                System.out.println("Man");
-        });
-        insertBookBtn.setOnAction(e -> new BookInsert().openWindow(border));
+        searchBookBtn.setOnAction(e -> new SearchPage().openWindow(border));
+        insertBookBtn.setOnAction(e -> new InsertPage().openWindow(border));
         
         // Adding title and buttons to BorderPane
         vBoxLayout.getChildren().addAll(searchBookBtn, insertBookBtn);
