@@ -2,6 +2,7 @@ package euclid;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.PrintWriter;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -26,8 +27,8 @@ import javafx.stage.Stage;
 
 
 public class OptionsPage{
-    File libraryFile;
-    Stage window;
+    private File libraryFile;
+    private Stage window;
     
     public void openWindow(){
         window = new Stage();
@@ -39,7 +40,7 @@ public class OptionsPage{
         
         // Path to file 
         Text pathText = new Text("Αρχείο Βιβλιοθήκης");
-        pathText.setFont(Font.font("Serif", FontWeight.SEMI_BOLD, 20));
+        pathText.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
         Button fileButton = new Button("Αρχείο");
         optionsLayout.getChildren().addAll(pathText, fileButton);
         fileButton.setOnAction(eh -> fileSelector());
@@ -83,6 +84,13 @@ public class OptionsPage{
     private void fileSelector(){
         FileChooser fileChooser = new FileChooser();
         libraryFile = fileChooser.showOpenDialog(window);
+        try{
+            PrintWriter pw = new PrintWriter("library_path.txt");
+            pw.println(libraryFile);
+            pw.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
     
     private void exitRoutine(){
@@ -90,15 +98,10 @@ public class OptionsPage{
             noFileError();
         else
             window.close();
-        
     }
     
     private void noFileError(){
         Alert alert = new Alert(AlertType.NONE, "Δεν έχει προσδιοριστεί αρχείο Βιβλιοθήκης", ButtonType.CLOSE);
         alert.showAndWait();
-    }
-    
-    public File getLibraryFile(){
-        return libraryFile;
     }
 }

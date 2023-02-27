@@ -45,8 +45,7 @@ import javafx.util.Duration;
 
 
 public class MainMenu {
-    BorderPane border;
-    File libraryFile;
+    private BorderPane border;
     
     public void openWindow(BorderPane border){
         this.border = border;
@@ -101,8 +100,6 @@ public class MainMenu {
         optionsBtn.setOnAction(e -> {
             OptionsPage optionsPage = new OptionsPage();
             optionsPage.openWindow();
-            libraryFile = optionsPage.getLibraryFile();
-            System.out.println(libraryFile);
         });
         
         // Adding background image to the buttons

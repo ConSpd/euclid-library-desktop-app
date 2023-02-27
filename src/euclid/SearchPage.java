@@ -1,7 +1,11 @@
 package euclid;
 
+import java.io.BufferedReader;
+import java.io.File;
 import javafx.scene.layout.BorderPane;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +13,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -28,15 +35,13 @@ import javafx.stage.Stage;
 
 
 public class SearchPage {
-    BorderPane border;
-    
+    private BorderPane border;
+    private Searcher searcher;
     
     public void openWindow(BorderPane border) {
+        searcher = new Searcher();
         this.border = border;
         createWindow();
-        
-
-
     }
     
     private void createWindow(){
@@ -56,7 +61,7 @@ public class SearchPage {
         */
         // Text Info
         Text info = new Text("Γράψε κριτήριο αναζήτησης");
-        info.setFont(Font.font("Serif",FontWeight.LIGHT,20));
+        info.setFont(Font.font("Verdana",FontWeight.LIGHT,20));
         
         // Option Fields
         ToggleGroup tg = new ToggleGroup();
@@ -91,6 +96,7 @@ public class SearchPage {
         prompt.setAlignment(Pos.CENTER);
         prompt.setFont(Font.font("Serif",FontWeight.SEMI_BOLD,50));
         Button searchButton = new Button("Αναζήτησε");
+        searchButton.setOnAction(eh -> searchRoutine());
         
         VBox middleLayout = new VBox(30);
         middleLayout.setAlignment(Pos.CENTER);
@@ -114,4 +120,13 @@ public class SearchPage {
         border.setBottom(backLayout);
     }
     
+    private void searchRoutine(){
+        File libraryFile = new File("library_path.txt");
+        if (!libraryFile.exists()){
+            Alert alert = new Alert(AlertType.NONE,"Δεν έχει προσδιορισθεί αρχείο βιβλιοθήκης\nΡυθμίσεις -> Αρχείο Βιβλιοθήκης",ButtonType.CLOSE);
+            alert.showAndWait();
+        }else{
+            searcher.search();
+        }
+    }
 }

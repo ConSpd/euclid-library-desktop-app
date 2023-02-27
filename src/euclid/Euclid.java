@@ -31,10 +31,10 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Euclid extends Application{
-    MainMenu mainMenu;
-    BorderPane border;
-    Stage window;
-    Scene scene;
+    private MainMenu mainMenu;
+    private BorderPane border;
+    private Stage window;
+    private Scene scene;
     
     public static void main(String[] args) {
         launch(args);

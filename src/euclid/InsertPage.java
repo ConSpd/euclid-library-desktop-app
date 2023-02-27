@@ -23,12 +23,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class InsertPage{
-    Stage window;
-    Button back, insert;
-    MainMenu mainMenu;
-    BorderPane border;
-    VBox vBoxLayout;
-    HBox hBoxLayout, categories, buttons;
+    private Stage window;
+    private Button back, insert;
+    private MainMenu mainMenu;
+    private BorderPane border;
+    private VBox vBoxLayout;
+    private HBox hBoxLayout, categories, buttons;
 
     public void openWindow(BorderPane border) {
         this.border = border;
