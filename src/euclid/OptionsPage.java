@@ -48,7 +48,7 @@ public class OptionsPage{
 
         // Adding background to layout
         try{
-            FileInputStream fs = new FileInputStream("/Users/conspd/Software/Euclid/src/euclid/paper.jpg");
+            FileInputStream fs = new FileInputStream(System.getProperty("user.dir")+"/src/euclid/etc/paper.jpg");
             Image img = new Image(fs);
             BackgroundImage myBi = new BackgroundImage( img,
                                                         BackgroundRepeat.NO_REPEAT,

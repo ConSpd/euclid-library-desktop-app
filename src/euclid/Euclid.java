@@ -55,7 +55,7 @@ public class Euclid extends Application{
         border = new BorderPane();
         
         // Reading background paper image and adding to layout
-        FileInputStream fs = new FileInputStream("/Users/conspd/Software/Euclid/src/euclid/paper.jpg");
+        FileInputStream fs = new FileInputStream(System.getProperty("user.dir")+"/src/euclid/etc/paper.jpg");
         Image img = new Image(fs);
         BackgroundImage myBi = new BackgroundImage( img,
                                                     BackgroundRepeat.NO_REPEAT,
@@ -70,7 +70,7 @@ public class Euclid extends Application{
         scene = new Scene(border, screenSize.getWidth(), screenSize.getHeight());
         
         
-        Image icon = new Image(new File("icon.png").toURI().toString());
+        Image icon = new Image(new File(System.getProperty("user.dir")+"/src/euclid/etc/icon.png").toURI().toString());
         window.getIcons().add(icon);
         window.setTitle("Euclid Library");
         window.setScene(scene);

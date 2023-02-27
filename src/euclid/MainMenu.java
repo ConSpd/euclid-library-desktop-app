@@ -104,7 +104,7 @@ public class MainMenu {
         
         // Adding background image to the buttons
         try{
-            FileInputStream fs = new FileInputStream("/Users/conspd/Software/Euclid/src/euclid/button.png");
+            FileInputStream fs = new FileInputStream(System.getProperty("user.dir")+"/src/euclid/etc/button.png");
             Image img = new Image(fs);
             BackgroundImage myBi = new BackgroundImage(img ,
                                                        BackgroundRepeat.NO_REPEAT,
