@@ -37,9 +37,12 @@ import javafx.stage.Stage;
 public class SearchPage {
     private BorderPane border;
     private Searcher searcher;
+    private MainMenu mainMenu;
     
-    SearchPage(){
-        searcher = new Searcher();
+    
+    SearchPage(Searcher searcher, MainMenu mainMenu){
+        this.searcher = searcher;
+        this.mainMenu = mainMenu;
     }
     
     public void openWindow(BorderPane border) {
@@ -114,7 +117,7 @@ public class SearchPage {
         HBox backLayout = new HBox(back);
         backLayout.setAlignment(Pos.CENTER);
         backLayout.setPadding(new Insets(0, 0, 190, 0));
-        back.setOnAction(eh -> new MainMenu().openWindow(border));
+        back.setOnAction(eh -> mainMenu.openWindow(border));
         
         
         border.setTop(titleLayout);

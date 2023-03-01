@@ -8,7 +8,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -23,13 +25,16 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class InsertPage{
-    private Stage window;
     private Button back, insert;
     private MainMenu mainMenu;
     private BorderPane border;
     private VBox vBoxLayout;
     private HBox hBoxLayout, categories, buttons;
 
+    InsertPage(MainMenu mainMenu){
+        this.mainMenu = mainMenu;
+    }
+    
     public void openWindow(BorderPane border) {
         this.border = border;
         
@@ -111,7 +116,7 @@ public class InsertPage{
         buttons.getChildren().addAll(back, insert);
         buttons.setAlignment(Pos.CENTER);
         buttons.setPadding(new Insets(0, 0, 190, 0));
-        back.setOnAction(e -> new MainMenu().openWindow(border));
+        back.setOnAction(e -> mainMenu.openWindow(border));
         
         vBoxLayout.getChildren().addAll(textNumber, number,
                                         textName, name,

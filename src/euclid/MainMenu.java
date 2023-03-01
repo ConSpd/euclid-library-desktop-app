@@ -19,7 +19,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.ColorAdjust;
@@ -46,6 +48,15 @@ import javafx.util.Duration;
 
 public class MainMenu {
     private BorderPane border;
+    private SearchPage searchPage;
+    private Searcher searcher;
+    private InsertPage insertPage;
+    
+    MainMenu(Searcher searcher){
+        this.searcher = searcher;
+        searchPage = new SearchPage(searcher, this);
+        insertPage = new InsertPage(this);
+    }
     
     public void openWindow(BorderPane border){
         this.border = border;
@@ -95,8 +106,8 @@ public class MainMenu {
         optionsBtn.setOnMouseExited(eh -> decreaseButton(optionsBtn));
         
         // Button functionalities
-        searchBookBtn.setOnAction(e -> new SearchPage().openWindow(border));
-        insertBookBtn.setOnAction(e -> new InsertPage().openWindow(border));
+        searchBookBtn.setOnAction(e -> searchPage.openWindow(border));
+        insertBookBtn.setOnAction(e -> insertPage.openWindow(border));
         optionsBtn.setOnAction(e -> {
             OptionsPage optionsPage = new OptionsPage();
             optionsPage.openWindow();

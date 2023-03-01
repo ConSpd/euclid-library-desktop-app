@@ -17,11 +17,7 @@ public class Searcher {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
     
-    Searcher(){
-        prepareCsvFile();
-    }
-    
-    private void prepareCsvFile(){
+    public void prepareCsvFile(){
         try{
             Alert alert = new Alert(AlertType.NONE, "Preparing File", ButtonType.CLOSE);
             alert.showAndWait();
