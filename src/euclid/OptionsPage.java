@@ -78,6 +78,9 @@ public class OptionsPage{
         window.setResizable(false);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(scene);
+        window.setTitle("Options");
+        Image icon = new Image(new File(System.getProperty("user.dir")+"/src/euclid/etc/Library_Icon.png").toURI().toString());
+        window.getIcons().add(icon);
         window.showAndWait();
     }
     

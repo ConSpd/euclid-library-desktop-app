@@ -70,7 +70,7 @@ public class Euclid extends Application{
         scene = new Scene(border, screenSize.getWidth(), screenSize.getHeight());
         
         
-        Image icon = new Image(new File(System.getProperty("user.dir")+"/src/euclid/etc/icon.png").toURI().toString());
+        Image icon = new Image(new File(System.getProperty("user.dir")+"/src/euclid/etc/Library_Icon.png").toURI().toString());
         window.getIcons().add(icon);
         window.setTitle("Euclid Library");
         window.setScene(scene);

@@ -38,15 +38,17 @@ public class SearchPage {
     private BorderPane border;
     private Searcher searcher;
     
-    public void openWindow(BorderPane border) {
+    SearchPage(){
         searcher = new Searcher();
+    }
+    
+    public void openWindow(BorderPane border) {
         this.border = border;
         createWindow();
     }
     
     private void createWindow(){
         border.getChildren().clear();
-        
         
         // Title section
         Text title = new Text("Αναζήτηση Βιβλίου");
