@@ -3,6 +3,8 @@ package euclid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -87,6 +89,14 @@ public class OptionsPage{
     private void fileSelector(){
         FileChooser fileChooser = new FileChooser();
         libraryFile = fileChooser.showOpenDialog(window);
+        Pattern pattern = Pattern.compile("(\\.xlsx|\\.xls)$",Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(libraryFile.toString());
+        boolean matchFound = matcher.find();
+        if(!matchFound){
+            Alert alert = new Alert(AlertType.NONE, "Το αρχείο δεν είναι κατάλληλου format. Αποδεκτά μόνο .xlsx ή .xls αρχεία", ButtonType.CLOSE);
+            alert.showAndWait();
+            return; 
+        }
         try{
             PrintWriter pw = new PrintWriter("library_path.txt");
             pw.println(libraryFile);
