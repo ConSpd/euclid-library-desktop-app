@@ -20,6 +20,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -79,6 +80,7 @@ public class SearchPage {
         RadioButton numberSelection = new RadioButton("Αριθμός");
         numberSelection.setToggleGroup(tg);
         
+        
         GridPane categories = new GridPane();
         categories.add(titleSelection, 0, 0);
         categories.add(authorSelection, 1, 0);
@@ -96,7 +98,7 @@ public class SearchPage {
         prompt.setAlignment(Pos.CENTER);
         prompt.setFont(Font.font("Serif",FontWeight.SEMI_BOLD,50));
         Button searchButton = new Button("Αναζήτησε");
-        searchButton.setOnAction(eh -> searchRoutine(prompt.getText()));
+        searchButton.setOnAction(eh -> searchRoutine(prompt.getText(), tg));
         
         VBox middleLayout = new VBox(30);
         middleLayout.setAlignment(Pos.CENTER);
@@ -120,13 +122,16 @@ public class SearchPage {
         border.setBottom(backLayout);
     }
     
-    private void searchRoutine(String query){
+    private void searchRoutine(String query, ToggleGroup tg){
         File libraryFile = new File("library_path.txt");
+        RadioButton selectedButton = (RadioButton) tg.getSelectedToggle();
+        String category = selectedButton.getText();
+        System.out.println(category);
         if (!libraryFile.exists()){
             Alert alert = new Alert(AlertType.NONE,"Δεν έχει προσδιορισθεί αρχείο βιβλιοθήκης\nΡυθμίσεις -> Αρχείο Βιβλιοθήκης",ButtonType.CLOSE);
             alert.showAndWait();
         }else{
-            Searcher.search(query);
+            Searcher.search(query, category);
         }
     }
 }

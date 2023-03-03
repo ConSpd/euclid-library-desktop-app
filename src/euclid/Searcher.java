@@ -57,18 +57,42 @@ public class Searcher {
         }
     }
     
-    public static void search(String query){
+    public static void search(String query, String category){
+        int categ;
+        switch(category){   // Depending on the format of the excel file change this part, maybe add it to UI 
+            case "Τίτλος": 
+                categ = 2;
+                break;
+            case "Συγγραφέας": 
+                categ = 3;
+                break;
+            case "Εκδοτικός Οίκος": 
+                categ = 4;
+                break;
+            case "Έτος":
+                categ = 5;
+                break;
+            case "Αριθμός":
+                categ = 6;
+                break;
+            default:
+                categ = 2;
+                break;
+        }
+        System.out.println("Category="+categ);
         if (workbookXSSF != null)
             for (Row row : sheetXSSF)
-                searchForMatches(row, query);
+                searchForMatches(row, query, categ);
         else
             for (Row row : sheetHSSF)
-                searchForMatches(row, query);
+                searchForMatches(row, query, categ);
     }
     
-    private static void searchForMatches(Row row, String query){
-        String tmp = row.getCell(2).getStringCellValue();
+    private static void searchForMatches(Row row, String query, int category){
+        try{
+            String tmp = row.getCell(category).getStringCellValue();
             if (tmp.equals(query))
                 System.out.println("Found it! Αt "+row.getRowNum());
+        }catch(NullPointerException e){}
     }
 }
