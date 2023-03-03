@@ -33,7 +33,6 @@ import javafx.scene.text.Text;
 
 public class SearchPage {
     private BorderPane border;
-    private Searcher searcher;
     private MainMenu mainMenu;
     
     
@@ -41,8 +40,7 @@ public class SearchPage {
         this.mainMenu = mainMenu;
     }
     
-    public void openWindow(BorderPane border, Searcher searcher) {
-        this.searcher = searcher;
+    public void openWindow(BorderPane border) {
         this.border = border;
         createWindow();
     }
@@ -128,11 +126,7 @@ public class SearchPage {
             Alert alert = new Alert(AlertType.NONE,"Δεν έχει προσδιορισθεί αρχείο βιβλιοθήκης\nΡυθμίσεις -> Αρχείο Βιβλιοθήκης",ButtonType.CLOSE);
             alert.showAndWait();
         }else{
-            searcher.search();
+            Searcher.search();
         }
-    }
-    
-    public void setSearcher(Searcher searcher){
-        this.searcher = searcher;
     }
 }

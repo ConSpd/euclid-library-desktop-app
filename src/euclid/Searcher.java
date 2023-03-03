@@ -43,9 +43,13 @@ public class Searcher {
             if (matchFound){  // It is a xlsx file
                 workbookXSSF = new XSSFWorkbook(libraryFile);
                 sheetXSSF = workbookXSSF.getSheetAt(0);
+                workbookHSSF = null; // We set is as null because when we change the file in program the HSSF was before that initialized, but now we changed to XSSF
+                sheetHSSF = null;    // Same goes for the rest of nulls
             }else{ // It is a xls file
                 workbookHSSF = new HSSFWorkbook(libraryFile);
                 sheetHSSF = workbookHSSF.getSheetAt(0);
+                workbookXSSF = null;
+                sheetXSSF = null;
             }
         }catch(Exception e){
             e.printStackTrace();

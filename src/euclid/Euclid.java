@@ -42,12 +42,10 @@ public class Euclid extends Application{
     
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Searcher searcher = new Searcher();
-        searcher.prepareCsvFile();
-        
+        Searcher.prepareCsvFile();
         window = primaryStage;
         createMainWindow();
-        mainMenu = new MainMenu(searcher);
+        mainMenu = new MainMenu();
         mainMenu.openWindow(border);
     }
     

@@ -49,11 +49,9 @@ import javafx.util.Duration;
 public class MainMenu {
     private BorderPane border;
     private SearchPage searchPage;
-    private Searcher searcher;
     private InsertPage insertPage;
     
-    MainMenu(Searcher searcher){
-        this.searcher = searcher;
+    MainMenu(){
         searchPage = new SearchPage(this);
         insertPage = new InsertPage(this);
     }
@@ -106,11 +104,11 @@ public class MainMenu {
         optionsBtn.setOnMouseExited(eh -> decreaseButton(optionsBtn));
         
         // Button functionalities
-        searchBookBtn.setOnAction(e -> searchPage.openWindow(border, searcher));
+        searchBookBtn.setOnAction(e -> searchPage.openWindow(border));
         insertBookBtn.setOnAction(e -> insertPage.openWindow(border));
         optionsBtn.setOnAction(e -> {
             OptionsPage optionsPage = new OptionsPage();
-            optionsPage.openWindow(searcher, searchPage);
+            optionsPage.openWindow(searchPage);
         });
         
         // Adding background image to the buttons
