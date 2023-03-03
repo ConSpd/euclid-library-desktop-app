@@ -17,6 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 
 public class Searcher {
     private static FileInputStream libraryFile;
@@ -56,23 +57,18 @@ public class Searcher {
         }
     }
     
-    public static void search(){
-//        for (Row row : sheet){
-//            Cell cell = row.getCell(2);
-//            System.out.println(cell.toString());
-//        }
-        if (workbookXSSF != null){
-            Alert alert = new Alert(AlertType.NONE, "XLSX File", ButtonType.CLOSE);
-            alert.showAndWait();
-            XSSFRow row = sheetXSSF.getRow(30);
-            XSSFCell cell = row.getCell(3);
-            System.out.println(cell.getStringCellValue());
-        }else{
-            Alert alert = new Alert(AlertType.NONE, "XLS File", ButtonType.CLOSE);
-            alert.showAndWait();
-            HSSFRow row = sheetHSSF.getRow(30);
-            HSSFCell cell = row.getCell(3);
-            System.out.println(cell.getStringCellValue());
-        }
+    public static void search(String query){
+        if (workbookXSSF != null)
+            for (Row row : sheetXSSF)
+                searchForMatches(row, query);
+        else
+            for (Row row : sheetHSSF)
+                searchForMatches(row, query);
+    }
+    
+    private static void searchForMatches(Row row, String query){
+        String tmp = row.getCell(2).getStringCellValue();
+            if (tmp.equals(query))
+                System.out.println("Found it! Αt "+row.getRowNum());
     }
 }

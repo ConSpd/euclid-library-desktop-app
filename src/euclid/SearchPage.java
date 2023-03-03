@@ -96,7 +96,7 @@ public class SearchPage {
         prompt.setAlignment(Pos.CENTER);
         prompt.setFont(Font.font("Serif",FontWeight.SEMI_BOLD,50));
         Button searchButton = new Button("Αναζήτησε");
-        searchButton.setOnAction(eh -> searchRoutine());
+        searchButton.setOnAction(eh -> searchRoutine(prompt.getText()));
         
         VBox middleLayout = new VBox(30);
         middleLayout.setAlignment(Pos.CENTER);
@@ -120,13 +120,13 @@ public class SearchPage {
         border.setBottom(backLayout);
     }
     
-    private void searchRoutine(){
+    private void searchRoutine(String query){
         File libraryFile = new File("library_path.txt");
         if (!libraryFile.exists()){
             Alert alert = new Alert(AlertType.NONE,"Δεν έχει προσδιορισθεί αρχείο βιβλιοθήκης\nΡυθμίσεις -> Αρχείο Βιβλιοθήκης",ButtonType.CLOSE);
             alert.showAndWait();
         }else{
-            Searcher.search();
+            Searcher.search(query);
         }
     }
 }
