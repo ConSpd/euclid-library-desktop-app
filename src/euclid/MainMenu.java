@@ -54,7 +54,7 @@ public class MainMenu {
     
     MainMenu(Searcher searcher){
         this.searcher = searcher;
-        searchPage = new SearchPage(searcher, this);
+        searchPage = new SearchPage(this);
         insertPage = new InsertPage(this);
     }
     
@@ -106,11 +106,11 @@ public class MainMenu {
         optionsBtn.setOnMouseExited(eh -> decreaseButton(optionsBtn));
         
         // Button functionalities
-        searchBookBtn.setOnAction(e -> searchPage.openWindow(border));
+        searchBookBtn.setOnAction(e -> searchPage.openWindow(border, searcher));
         insertBookBtn.setOnAction(e -> insertPage.openWindow(border));
         optionsBtn.setOnAction(e -> {
             OptionsPage optionsPage = new OptionsPage();
-            optionsPage.openWindow();
+            optionsPage.openWindow(searcher, searchPage);
         });
         
         // Adding background image to the buttons

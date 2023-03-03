@@ -31,9 +31,13 @@ import javafx.stage.Stage;
 public class OptionsPage{
     private File libraryFile;
     private Stage window;
+//    private Searcher searcher;
+    private SearchPage searchPage;
     
-    public void openWindow(){
+    public void openWindow(Searcher searcher, SearchPage searchPage){
         window = new Stage();
+//        this.searcher = searcher;
+        this.searchPage = searchPage;
         BorderPane border = new BorderPane();
         
         // Options section
@@ -101,6 +105,7 @@ public class OptionsPage{
             PrintWriter pw = new PrintWriter("library_path.txt");
             pw.println(libraryFile);
             pw.close();
+            
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -109,8 +114,11 @@ public class OptionsPage{
     private void exitRoutine(){
         if (libraryFile == null)
             noFileError();
-        else
+        else{
             window.close();
+            searcher.prepareCsvFile();
+            searchPage.setSearcher(searcher);
+        }
     }
     
     private void noFileError(){

@@ -29,9 +29,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
 
 
 public class SearchPage {
@@ -40,12 +37,12 @@ public class SearchPage {
     private MainMenu mainMenu;
     
     
-    SearchPage(Searcher searcher, MainMenu mainMenu){
-        this.searcher = searcher;
+    SearchPage(MainMenu mainMenu){
         this.mainMenu = mainMenu;
     }
     
-    public void openWindow(BorderPane border) {
+    public void openWindow(BorderPane border, Searcher searcher) {
+        this.searcher = searcher;
         this.border = border;
         createWindow();
     }
@@ -133,5 +130,9 @@ public class SearchPage {
         }else{
             searcher.search();
         }
+    }
+    
+    public void setSearcher(Searcher searcher){
+        this.searcher = searcher;
     }
 }

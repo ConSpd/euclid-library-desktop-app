@@ -19,14 +19,13 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class Searcher {
-    private FileInputStream libraryFile;
-    private XSSFWorkbook workbookXSSF;
-    private HSSFWorkbook workbookHSSF;
-    private XSSFSheet sheetXSSF;
-    private HSSFSheet sheetHSSF;
-    private String typeOfCsv;
+    private static FileInputStream libraryFile;
+    private static XSSFWorkbook workbookXSSF;
+    private static HSSFWorkbook workbookHSSF;
+    private static XSSFSheet sheetXSSF;
+    private static HSSFSheet sheetHSSF;
     
-    public void prepareCsvFile(){
+    public static void prepareCsvFile(){
         try{
 //            Alert alert = new Alert(AlertType.NONE, "Preparing File", ButtonType.CLOSE);
 //            alert.showAndWait();
@@ -53,7 +52,7 @@ public class Searcher {
         }
     }
     
-    public void search(){
+    public static void search(){
 //        for (Row row : sheet){
 //            Cell cell = row.getCell(2);
 //            System.out.println(cell.toString());
