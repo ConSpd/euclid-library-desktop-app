@@ -20,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 
 public class Searcher {
@@ -122,7 +123,10 @@ public class Searcher {
     
     private static void searchForMatches(Row row, String query, int category){
         try{
-            String cellString = row.getCell(category).getStringCellValue();
+            DataFormatter formatter = new DataFormatter();
+            
+//            String cellString = row.getCell(category).getStringCellValue();
+            String cellString = formatter.formatCellValue(row.getCell(category));
             Analyzer cellAnalyzer = new GreekAnalyzer();
             
             TokenStream cellStream = cellAnalyzer.tokenStream(null, new StringReader(cellString));
