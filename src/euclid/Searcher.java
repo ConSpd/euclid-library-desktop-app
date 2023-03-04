@@ -4,17 +4,20 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.StringReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.CachingTokenFilter;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.el.GreekAnalyzer;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -26,6 +29,10 @@ public class Searcher {
     private static XSSFSheet sheetXSSF;
     private static HSSFSheet sheetHSSF;
     
+    private static Analyzer analyzer;
+    private static CachingTokenFilter queryCache;
+    private static CharTermAttribute queryTermAttribute;
+    
     public static void prepareCsvFile(){
         try{
 //            Alert alert = new Alert(AlertType.NONE, "Preparing File", ButtonType.CLOSE);
@@ -34,13 +41,13 @@ public class Searcher {
             String libraryFileName = br.readLine();
             libraryFile = new FileInputStream(new File(libraryFileName));
             
-            System.out.println(libraryFileName);
             
             // Checking if file is xlsx or xls or something else in order to use XSSF or HSSF
             Pattern pattern = Pattern.compile("\\.xlsx$",Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(libraryFileName);
             boolean matchFound = matcher.find();
             
+            // Open file and get first sheet
             if (matchFound){  // It is a xlsx file
                 workbookXSSF = new XSSFWorkbook(libraryFile);
                 sheetXSSF = workbookXSSF.getSheetAt(0);
@@ -59,6 +66,22 @@ public class Searcher {
     
     public static void search(String query, String category){
         int categ;
+        // Checking the language of the query
+        Pattern pattern = Pattern.compile("[a-zA-Z]",Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(query);
+        boolean matchFound = matcher.find();
+        if(matchFound)
+            analyzer = new EnglishAnalyzer();
+        else
+            analyzer = new GreekAnalyzer();
+        
+        TokenStream queryStream = analyzer.tokenStream(null, new StringReader(query));
+        queryCache = new CachingTokenFilter(queryStream);
+        
+        queryTermAttribute = queryCache.addAttribute(CharTermAttribute.class);
+        
+        
+        // Checking the category entered
         switch(category){   // Depending on the format of the excel file change this part, maybe add it to UI 
             case "Τίτλος": 
                 categ = 2;
@@ -79,20 +102,49 @@ public class Searcher {
                 categ = 2;
                 break;
         }
-        System.out.println("Category="+categ);
+
+//        System.out.println("Category="+categ);
         if (workbookXSSF != null)
             for (Row row : sheetXSSF)
                 searchForMatches(row, query, categ);
         else
             for (Row row : sheetHSSF)
                 searchForMatches(row, query, categ);
+        
+        try{
+            queryCache.close();
+            queryStream.close();
+            analyzer.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
     
     private static void searchForMatches(Row row, String query, int category){
         try{
-            String tmp = row.getCell(category).getStringCellValue();
-            if (tmp.equals(query))
-                System.out.println("Found it! Αt "+row.getRowNum());
+            String cellString = row.getCell(category).getStringCellValue();
+            Analyzer cellAnalyzer = new GreekAnalyzer();
+            
+            TokenStream cellStream = cellAnalyzer.tokenStream(null, new StringReader(cellString));
+            CharTermAttribute cellTermAttribute = cellStream.addAttribute(CharTermAttribute.class);
+            
+            try{
+                cellStream.reset();
+                while (cellStream.incrementToken()) {
+                    queryCache.reset();
+                    while (queryCache.incrementToken()){
+                        String queryTerm = queryTermAttribute.toString();
+                        String cellTerm = cellTermAttribute.toString();
+                        if (queryTerm.equals(cellTerm)){
+                            System.out.println("Found match at row "+row.getRowNum());
+                        }
+                    }
+                }
+                cellStream.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            
         }catch(NullPointerException e){}
     }
 }
