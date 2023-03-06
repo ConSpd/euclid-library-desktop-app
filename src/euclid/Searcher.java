@@ -140,7 +140,8 @@ public class Searcher {
                         String queryTerm = queryTermAttribute.toString();
                         String cellTerm = cellTermAttribute.toString();
                         if (queryTerm.equals(cellTerm)){
-                            System.out.println("Found match at row "+row.getRowNum());
+                            Results result = addToResults(row);
+                            System.out.println(result.toString());
                         }
                     }
                 }
@@ -151,4 +152,24 @@ public class Searcher {
             
         }catch(NullPointerException e){}
     }
+    
+    private static Results addToResults(Row row){
+        DataFormatter formatter = new DataFormatter();
+        int number = row.getRowNum()+1;
+        String name = formatter.formatCellValue(row.getCell(2));
+        String author = formatter.formatCellValue(row.getCell(3));
+        String publisher = formatter.formatCellValue(row.getCell(4));
+        String year = formatter.formatCellValue(row.getCell(5));
+        Results result = new Results.ResultsBuilder()
+                                    .number(number)
+                                    .name(name)
+                                    .author(author)
+                                    .publisher(publisher)
+                                    .year(year)
+                                    .category("Null")
+                                    .build();
+        return result;
+    }
 }
+
+
