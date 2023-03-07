@@ -5,6 +5,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.scene.control.Alert;
@@ -33,6 +42,7 @@ public class Searcher {
     private static Analyzer analyzer;
     private static CachingTokenFilter queryCache;
     private static CharTermAttribute queryTermAttribute;
+    private static List<Results> resultsList;
     
     public static void prepareCsvFile(){
         try{
@@ -67,6 +77,7 @@ public class Searcher {
     
     public static void search(String query, String category){
         int categ;
+        resultsList = new ArrayList<>();
         // Checking the language of the query
         Pattern pattern = Pattern.compile("[a-zA-Z]",Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(query);
@@ -104,7 +115,6 @@ public class Searcher {
                 break;
         }
 
-//        System.out.println("Category="+categ);
         if (workbookXSSF != null)
             for (Row row : sheetXSSF)
                 searchForMatches(row, query, categ);
@@ -118,6 +128,19 @@ public class Searcher {
             analyzer.close();
         }catch(Exception e){
             e.printStackTrace();
+        }
+        
+        
+        // Sorting the resultsList according to the score of each Book
+        Collections.sort(resultsList, new Comparator<Results>() {
+        @Override
+        public int compare(Results r1, Results r2) {
+            return r2.getScore() - r1.getScore();
+        }
+        });
+        
+        for (Results r : resultsList){
+            System.out.println(r.toString());
         }
     }
     
@@ -139,9 +162,9 @@ public class Searcher {
                     while (queryCache.incrementToken()){
                         String queryTerm = queryTermAttribute.toString();
                         String cellTerm = cellTermAttribute.toString();
-                        if (queryTerm.equals(cellTerm)){
+                        if (queryTerm.equals(cellTerm)){         // If query and cell string are same
                             Results result = addToResults(row);
-                            System.out.println(result.toString());
+                            manageScore(result); // If book already exists in Map update the value by 1
                         }
                     }
                 }
@@ -169,6 +192,15 @@ public class Searcher {
                                     .category("Null")
                                     .build();
         return result;
+    }
+    
+    private static void manageScore(Results result){
+        for(Results r : resultsList)
+            if(r.getNumber() == result.getNumber()){
+                r.incrScore();
+                return;
+            }
+        resultsList.add(result);
     }
 }
 

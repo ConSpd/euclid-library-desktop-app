@@ -2,6 +2,7 @@ package euclid;
 
 public class Results{
     private int number;
+    private int score = 1;
     private String name;
     private String author;
     private String publisher = "Unknown_publisher";
@@ -41,6 +42,14 @@ public class Results{
         return this.category;
     }
     
+    public int getScore(){
+        return this.score;
+    }
+    public void incrScore(){
+        this.score++;
+    }
+    
+    
     @Override
     public String toString(){
         String result = "Number: "+this.number+
@@ -48,7 +57,8 @@ public class Results{
                         " Author: "+this.author+
                         " Publisher: "+this.publisher+
                         " Year: "+this.year+
-                        " Category: "+this.category;
+                        " Category: "+this.category+
+                        " Score: "+this.score;
         return result;
     }
     
