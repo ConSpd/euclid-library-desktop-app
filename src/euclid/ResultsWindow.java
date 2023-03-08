@@ -31,6 +31,7 @@ public class ResultsWindow {
     private List<Results> resultsList;
     private Stage window;
     private int selectedBook = 0;
+    private Text totalBooks;
     
     public void openResultsUI(List<Results> resultsList){
         // Check if there were no books found
@@ -51,6 +52,7 @@ public class ResultsWindow {
         makeMiddleSection(resultsBorder, selectedBook);
         
         makeBottomSection(resultsBorder);
+        
         finishWindow(resultsBorder);
         
     }
@@ -60,21 +62,25 @@ public class ResultsWindow {
         Text title = new Text("Αποτελέσματα");
         title.setFont(Font.font("Copperplate", FontWeight.BOLD,50));
         
+        Text booksFound = new Text("("+Integer.toString(selectedBook+1)+"/"+resultsList.size()+")");
+        booksFound.setFont(Font.font("Copperplate", 20));
+        
         VBox titleLayout = new VBox();
-        titleLayout.getChildren().add(title);
+        titleLayout.getChildren().addAll(title, booksFound);
         titleLayout.setAlignment(Pos.CENTER);
+        titleLayout.setPadding(new Insets(0, 0, 20, 0));
         border.setTop(titleLayout);
     }
     
     private void makeMiddleSection(BorderPane border, int selectedBook){
         // At resultsLayout left is the image and right is the book info
         HBox resultsLayout = new HBox(20);
+        resultsLayout.setPadding(new Insets(0, 0, 0, 20));
         
         addBookImage(resultsLayout);
         addBookDescription(resultsLayout);
         border.setCenter(resultsLayout);
-        
-        
+        makeTitle(border);
     }
     
     private void addBookDescription(HBox resultsLayout){
@@ -133,6 +139,7 @@ public class ResultsWindow {
         leftArrowBtn.setMinSize(128, 128);
         Button rightArrowBtn = new Button();
         rightArrowBtn.setMinSize(128, 128);
+        
         arrowsLayout.getChildren().addAll(leftArrowBtn, rightArrowBtn);
         arrowsLayout.setAlignment(Pos.CENTER);
         
@@ -179,7 +186,7 @@ public class ResultsWindow {
     
     private BorderPane makeMainWindow(){
         BorderPane resultsBorder = new BorderPane();
-        window.setHeight(800);
+        window.setHeight(850);
         window.setWidth(900);
         
         // Adding background to layout
