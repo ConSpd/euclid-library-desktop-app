@@ -75,7 +75,7 @@ public class Searcher {
         }
     }
     
-    public static void search(String query, String category){
+    public static List<Results> search(String query, String category){
         int categ;
         resultsList = new ArrayList<>();
         // Checking the language of the query
@@ -139,9 +139,7 @@ public class Searcher {
         }
         });
         
-        for (Results r : resultsList){
-            System.out.println(r.toString());
-        }
+        return resultsList;
     }
     
     private static void searchForMatches(Row row, String query, int category){
@@ -184,7 +182,7 @@ public class Searcher {
         String publisher = formatter.formatCellValue(row.getCell(4));
         String year = formatter.formatCellValue(row.getCell(5));
         Results result = new Results.ResultsBuilder()
-                                    .number(number)
+                                    .number(number+1)
                                     .name(name)
                                     .author(author)
                                     .publisher(publisher)

@@ -6,9 +6,12 @@ import javafx.scene.layout.BorderPane;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -22,6 +25,13 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -30,6 +40,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 
 public class SearchPage {
@@ -93,6 +105,7 @@ public class SearchPage {
 
         // Search Field
         TextField prompt = new TextField();
+        prompt.setText("Πρίγκηπας");
         prompt.setMinSize(40, 60);
         prompt.setMaxWidth(900);
         prompt.setAlignment(Pos.CENTER);
@@ -131,7 +144,9 @@ public class SearchPage {
             Alert alert = new Alert(AlertType.NONE,"Δεν έχει προσδιορισθεί αρχείο βιβλιοθήκης\nΡυθμίσεις -> Αρχείο Βιβλιοθήκης",ButtonType.CLOSE);
             alert.showAndWait();
         }else{
-            Searcher.search(query, category);
+            List<Results> resultsList = Searcher.search(query, category);
+            ResultsWindow resultsWindow = new ResultsWindow();
+            resultsWindow.openResultsUI(resultsList);
         }
     }
 }

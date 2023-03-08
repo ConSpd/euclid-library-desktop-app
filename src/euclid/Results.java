@@ -53,12 +53,12 @@ public class Results{
     @Override
     public String toString(){
         String result = "Number: "+this.number+
-                        " Name: "+this.name+
-                        " Author: "+this.author+
-                        " Publisher: "+this.publisher+
-                        " Year: "+this.year+
-                        " Category: "+this.category+
-                        " Score: "+this.score;
+                        "\nName: "+this.name+
+                        "\nAuthor: "+this.author+
+                        "\nPublisher: "+this.publisher+
+                        "\nYear: "+this.year+
+                        "\nCategory: "+this.category+
+                        "\nScore: "+this.score;
         return result;
     }
     
