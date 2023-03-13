@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Euclid">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/Euclid.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

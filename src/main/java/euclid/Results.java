@@ -5,9 +5,9 @@ public class Results{
     private int score = 1;
     private String name;
     private String author;
-    private String publisher = "Unknown_publisher";
-    private String year = "Unknown_year";
-    private String category = "";
+    private String publisher = "Άγνωστος";
+    private String year = "-";
+    private String category = "-";
     
     private Results(ResultsBuilder builder){
         this.number = builder.number;
@@ -27,19 +27,27 @@ public class Results{
     }
     
     public String getAuthor(){
-        return this.author;
+        if (!this.author.isEmpty())
+            return this.author;
+        return "-";
     }
     
     public String getPublisher(){
-        return this.publisher;
+        if (!this.publisher.isEmpty())
+            return this.publisher;
+        return "-";
     }
     
     public String getYear(){
-        return this.year;
+        if(!this.year.isEmpty())
+            return this.year;
+        return "-";
     }
     
     public String getCategory(){
-        return this.category;
+        if(!this.category.isEmpty())
+            return this.category;
+        return "-";
     }
     
     public int getScore(){

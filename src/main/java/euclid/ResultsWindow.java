@@ -93,23 +93,28 @@ public class ResultsWindow {
         
         Text number = new Text("Αριθμός");
         Text bookNumber = new Text(Integer.toString(resultsList.get(selectedBook).getNumber()));
-        number.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
-
+        number.setFont(Font.font("Copperplate", FontWeight.BOLD, 30));
+        bookNumber.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
+        
         Text name = new Text("Τίτλος");
         Text bookName = new Text(resultsList.get(selectedBook).getName());
-        name.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
+        name.setFont(Font.font("Copperplate", FontWeight.BOLD, 30));
+        bookName.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
         
         Text author = new Text("Συγγραφέας");
         Text bookAuthor = new Text(resultsList.get(selectedBook).getAuthor());
-        author.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
+        author.setFont(Font.font("Copperplate", FontWeight.BOLD, 30));
+        bookAuthor.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
         
         Text publisher = new Text("Εκδότης");
         Text bookPublisher = new Text(resultsList.get(selectedBook).getPublisher());
-        publisher.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
+        publisher.setFont(Font.font("Copperplate", FontWeight.BOLD, 30));
+        bookPublisher.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
         
         Text year = new Text("Έτος");
         Text bookYear = new Text(resultsList.get(selectedBook).getYear());
-        year.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
+        year.setFont(Font.font("Copperplate", FontWeight.BOLD, 30));
+        bookYear.setFont(Font.font("Serif Regular", FontWeight.BOLD, 20));
         
         bookInfoLayout.getChildren().addAll(number, bookNumber,
                                             name, bookName,
